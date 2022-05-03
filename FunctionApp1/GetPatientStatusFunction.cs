@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
-namespace HealthStatusFunctionApp
+namespace FunctionApp1
 {
     public class GetPatientStatusFunction
     {

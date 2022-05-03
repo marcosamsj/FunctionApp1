@@ -18,6 +18,14 @@ namespace FunctionApp1
 {
     public class Function1
     {
+        
+        private readonly ILogger<Function1> _logger;
+
+        public Function1(ILogger<Function1> log)
+        {
+            _logger = log;
+        }
+        
         [FunctionName("Function1")]
                     public void Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "healthstatus/{patientId}")] HttpRequest req, string patientId, [CosmosDB(

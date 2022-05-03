@@ -1,11 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
 
@@ -14,41 +19,21 @@ namespace FunctionApp1
     public static class Function1
     {
         [FunctionName("Function1")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post",
-            Route = "todoitems/{partitionKey}/{id}")] HttpRequest req,
-            
-            [CosmosDB(
-                databaseName: "ToDoItems",
-                collectionName: "Items",
-                ConnectionStringSetting = "CosmosDBConnection",
-                Id = "{id}",
-                PartitionKey = "{partitionKey}")] ToDoItem toDoItem,
-                  ILogger log)
-        {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            //string name = req.Query["name"];
-
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            //dynamic data = JsonConvert.DeserializeObject(requestBody);
-            //name = name ?? data?.name;
-
-            //string responseMessage = string.IsNullOrEmpty(name)
-            //    ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-            //    : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            if (toDoItem == null)
+                    public void Run(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "healthstatus/{patientId}")] HttpRequest req, string patientId, [CosmosDB(
+            databaseName: "patients",
+            collectionName: "healthstatus",
+            ConnectionStringSetting = "CosmosDBConnection")]out HealthStatus status)
             {
-                log.LogInformation($"ToDo item not found");
-            }
-            else
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            string json = String.Empty;
+            using (StreamReader streamReader = new StreamReader(req.Body))
             {
-                log.LogInformation($"Found ToDo item, Description={toDoItem.HealthStatus}");
-                
+            json = streamReader.ReadToEnd();
             }
-           // return new OkResult();
-            return new OkObjectResult(toDoItem.HealthStatus);
-        }
+            status = JsonConvert.DeserializeObject<HealthStatus>(json);
+            }
+        
     }
 }

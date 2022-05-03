@@ -30,7 +30,7 @@ namespace HealthStatusFunctionApp
                 databaseName: "patients",
                 collectionName: "healthstatus",
                 ConnectionStringSetting = "CosmosDBConnection",
-                SqlQuery = "select * from ToDoItems r where r.id = {patientId} and DateTimeDiff(\"day\", r.submittedOn, GetCurrentDateTime ()) >= 14",
+                SqlQuery = "select * from healthstatus r where r.id = {patientId}",
                 PartitionKey = "{Query.pid}")]IEnumerable<HealthStatus> sumbissions)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");

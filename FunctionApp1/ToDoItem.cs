@@ -5,12 +5,12 @@ namespace FunctionApp1
 {
     public class HealthStatus
     {
-        public Guid PatientId { get; set; }
+        public Guid patientId { get; set; }
 
-        public string HeatlhStatus { get; set; }
+        public string healthStatus { get; set; }
 
-        public IEnumerable<string> Symptoms { get; set; }
+        public IEnumerable<string> symptoms { get; set; }
 
-        public DateTime SubmittedOn { get; set; }
+        public DateTime submittedOn { get; set; }
     }
 }

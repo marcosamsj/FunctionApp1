@@ -35,12 +35,18 @@ namespace FunctionApp1
             {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
+                         Guid patientGuid = Guid.Empty;
+
+            if (false == Guid.TryParse(patientId, out patientGuid)) patientGuid = Guid.NewGuid();
+                        
             string json = String.Empty;
             using (StreamReader streamReader = new StreamReader(req.Body))
             {
             json = streamReader.ReadToEnd();
             }
             status = JsonConvert.DeserializeObject<HealthStatus>(json);
+                        status.patientId = patientGuid;
+                        status.submittedOn = DateTime.UtcNow;
             }
         
     }

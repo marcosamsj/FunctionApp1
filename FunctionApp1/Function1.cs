@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 namespace FunctionApp1
 {
-    public static class Function1
+    public class Function1
     {
         [FunctionName("Function1")]
                     public void Run(

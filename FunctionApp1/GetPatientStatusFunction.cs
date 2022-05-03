@@ -31,7 +31,7 @@ namespace FunctionApp1
                 collectionName: "healthstatus",
                 ConnectionStringSetting = "CosmosDBConnection",
                 SqlQuery = "select * from healthstatus r where r.id = {patientId}",
-                PartitionKey = "{Query.patientId}")]IEnumerable<HealthStatus> sumbissions)
+                PartitionKey = "{patientId}")]IEnumerable<HealthStatus> sumbissions)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 

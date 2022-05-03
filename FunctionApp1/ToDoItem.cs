@@ -1,11 +1,13 @@
-﻿namespace FunctionApp1
+namespace FunctionApp1
 {
-    public class ToDoItem
+    public class HealthStatus
     {
-        public string ToDoItemId { get; set; }
+        public Guid PatientId { get; set; }
 
-        public string ToDoItemPartitionKeyValue { get; set; }
+        public string HeatlhStatus { get; set; }
 
-        public string HealthStatus { get; set; }
+        public IEnumerable<string> Symptoms { get; set; }
+
+        public DateTime SubmittedOn { get; set; }
     }
 }
